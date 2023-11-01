@@ -1,5 +1,4 @@
-#Cat
-*This is a kind of animal you will love :3*
+hehe meme
 ---
 layout: post
 title: bai viet 1
