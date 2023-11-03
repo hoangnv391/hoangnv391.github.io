@@ -18,18 +18,34 @@ categories: embedded
 ![_config.yml]({{ site.baseurl }}/images/interrupt.png)
 # I.Tổng quan
 ## 1. Ngoại lệ và ngắt (Exception and Interrupt)
-Trong bài viết, mình sẽ chỉ sử dụng từ "ngắt", "ngoại lệ" - với bản chất giống như ngắt, chỉ là có một chút khác biệt, mình sẽ giải thích sự khác biệt đó ở phía dưới.  
-
-Ngắt thường được tạo ra bởi phần cứng, như các ngoại vi hoặc các chân đầu vào của GPIO, trong một số trường hợp, ngắt cũng có thể được tạo ra bởi phần mềm. Trong lập trình nhúng, nếu muốn xử lý một sự kiện ngắt thì cần có một hàm riêng để xử lý ngắt, hàm đó còn được gọi là Interrupt Service Routines (ISR).  
-
-Vậy còn ngoại lệ thì sao?. Giống như ngắt, ngoại lệ cũng được tạo ra bởi phần cứng, chỉ có khác biệt là, phần cứng ở đây chính là bộ xử lý. Ngoại lệ thường xảy ra khi chương trình gặp lỗi về logic toán học (ví dụ: chia cho 0, sẽ gây ra rỗi MemFault) hoặc khi cấu hình sai ở những phần cứng mà bộ xử lý muốn truy cập (ví dụ: khi chưa cấp clock cho một ngoại vi, mà bộ xử lý cố truy cập vào các thanh ghi ở ngoại vi đó, sẽ dẫn đến lỗi transfer error, là một dạng của BusFault).  
+Ngắt thường được tạo ra bởi phần cứng, như các ngoại vi hoặc các chân đầu vào của GPIO, trong một số trường hợp, ngắt cũng có thể được tạo ra bởi phần mềm. Trong lập trình nhúng, nếu muốn xử lý một sự kiện ngắt thì cần có một hàm riêng để xử lý ngắt, hàm đó còn được gọi là Interrupt Service Routines (ISR).   
 
 ## 2. Nested Vector Interrupt Controller (NVIC)
 NVIC là một ngoại vi nằm trong bộ xử lý, được sử dụng để xử lý các ngoại lệ và ngắt, bao gồm cấu hình, độ ưu tiên và interrupt masking.  
+
 NVIC có thể xử lý 2 nguồn ngắt:  
 * Pulsed interrupt request - yêu cầu ngắt chỉ xảy ra trong một clock cycle. Khi NVIC nhận được tín hiệu ngắt, trạng thái chờ tương ứng sẽ được đặt và giữ cho đến khi ngắt được phục vụ.
 * Level triggred interrupt request - nguồn ngắt sẽ giữ request high cho đến khi ngắt được phục vụ.
 
 # II. Ngắt và quá trình xử lý ngắt
+## 1. Tổng quan
+Ngắt là một sự kiện thường được tạo ra bỏi phần cứng, làm thay đổi luồng chạy thông thường của chương trình. Khi một ngoại vi hoặc phần cứng cần được phục vụ bởi bộ xử lý, quy trình thường sẽ xảy ra như sau:
+1. Ngoại vi gửi một yêu cầu xử lý ngắt (interrupt request) tới bộ xử lý.
+2. Bộ xử lý hoãn thực thi tác vụ hiện tại.
+3. Bộ xử lý thực thi ISR để phục vụ ngoại vi hoặc phần cứng, việc xóa interrupt request trong ISR cần được thực hiện nếu cần thiết.
+4. Bộ xử lý tiếp tục thực hiện công việc trước khi ngắt xảy ra.
+
+## 2. Phân loại ngắt
+Xét theo exception number, có 2 kiểu ngắt:
+* 1 - 15 là ngoại lệ hệ thống (system exception)
+* Từ 16 trở lên là các ngắt (interrupt)
+
+Phần lớn độ ưu tiên của các ngắt (priority) là có thể cấu hình được. Tuy vậy, có một vài ngắt mà mức độ ưu tiên của chúng là cố định, bao gồm:
+* Reset Handler - (-3)
+* Non-Masked Interrupt (NMI) - (-2)
+* HardFault - (-1)
+
+*Hãy nhớ, exception number là duy nhất cho mỗi ngắt*
+
 
 
