@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Ngoại lệ và ngắt trong lập trình nhúng
+title: Sơ lược về ngoại lệ và ngắt trong lập trình nhúng
 categories: embedded
 ---
 
