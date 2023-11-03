@@ -9,7 +9,7 @@ categories: embedded
 *Các từ viết tắt được sử dụng trong bài viết*    
 
 | **Từ viết tắt**      | **Viết đầy đủ** |
-| :-----------: | :-----------: |
+| :-----------: | :----------- |
 | ISR      | Interrupt Service Routine       |
 | NVIC   | Nested Vector Interrupt Controller        |
 
