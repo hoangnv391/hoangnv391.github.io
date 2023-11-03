@@ -12,7 +12,9 @@ categories: embedded
 | :-----------: | :----------- |
 | ISR      | Interrupt Service Routine       |
 | NVIC   | Nested Vector Interrupt Controller        |
-
+| NMI | Non-masked Interrupt |
+| SCB | System Control Block |
+| STIR | Software Trigger Interrupt Register |
 
 
 ![_config.yml]({{ site.baseurl }}/images/interrupt.png)
@@ -47,7 +49,40 @@ Khi 2 ngắt cùng xảy ra, việc thực thi ISR của ngắt nào trước đ
 
 Priority level của các ngắt này là các số âm, thể hiện rằng chúng có mức độ ưu tiên cao hơn tất cả các ngắt còn lại.  
 
-*Hãy nhớ, exception number là duy nhất cho mỗi ngắt*
+*Hãy nhớ, exception number là duy nhất cho mỗi ngắt.*
 
+## 3. Tổng quan về quản lý ngắt
+Tất cả các thanh ghi trong SCB và NVIC chỉ có thể được truy cập trong Priviledged Mode. Tuy nhiên, thanh ghi STIR trong NVIC có thể được cấu hình để cho phép truy cập trong chế độ Unpriviledged Mode.  
 
+Sau khi reset, mọi ngắt bị vô hiệu hóa và mọi mức ưu tiên được đặt hết về 0. Trước khi sử dụng bất kỳ ngắt nào, cần phải:
+* Cấu hình mức độ ưu tiên cho ngắt (đây là một tùy chọn).
+* Kích hoạt interrupt generation trong ngoại vi, thứ sẽ kích hoạt ngắt.
+* Kích hoạt ngắt trong NVIC.
 
+Khi một ngắt được kích hoạt, ISR tương ứng sẽ được thực thi. Tên của ISR có thể được tìm thấy trong startup code, thứ được cung cấp bởi nhà sản xuất (vendor). Tên của ISR sau khi được viết lại cần phải giống với tên được sử dụng trong vector table để linker có thể thay thế địa chỉ của hàm ngắt vào vector table một cách chính xác.  
+
+## 4. Định nghĩa về độ ưu tiên.
+Việc ngắt có thể được thực thi hay không phụ thuộc vào mức độ ưu tiên của ngắt cần được phục vụ và độ ưu tiên hiện tại của bộ xử lý. Một ngắt có mức độ ưu tiên cao hơn (có số priority level nhỏ hơn) có thể chiếm quyền một ngắt có mức độ ưu tiên thấp hơn (có số priority level lớn hơn), đây được gọi là ngắt lồng (nested exception/interrupt).  
+
+Một vài ngắt như Reset, NMI và HardFault có mức ưu tiên là cố định. Chúng có priority level là số âm, thể hiện rằng chúng có mức ưu tiên cao hơn tất cả các ngắt khác. Các ngắt khác có mức độ ưu tiên có thể cấu hình được từ 0 - 255.  
+
+Tuy có thể xử lý tới 256 priority level, trong thực tế, con số này thấp hơn trên các sản phầm, thường là 8, 16, 32 và hơn nữa. Điều này là vởi vì nếu có quá nhiều mức ưu tiên ngắt, điều đó sẽ làm tăng mức tiêu thụ năng lượng và làm giảm tốc độ. Trong phần lớn trường hợp, các ứng dụng thực tế chỉ yêu cầu một lượng nhỏ các ngắt có mức độ ưu tiên có thể cấu hình được. Việc này thường được thực hiện bằng cách cắt bớt các bit có trọng số thấp (LSB) trong thanh ghi Priority Configuration Register (PCR).  
+
+## 5. Các trạng thái của ngắt
+Trong phần này, mình sẽ sử dụng các từ tiếng Anh để mô tả trạng thái của một ngắt, bởi dịch sang tiếng Việt hơi khó.  
+Các trạng thái có thể có của một ngắt:  
+* Disabled or enabled
+* Pending
+* Active
+* Pending + Active
+
+Sự kết hợp các trạng thái của ngắt là khả thi. Ví dụ, trong khi một ngắt đang được xử lý (active), có thể disable nó và khi một yêu cầu ngắt đến từ cùng ngoại vi trước đó trước khi ra khỏi ngắt, sẽ dẫn đến việc ngắt bị disabled trong khi đang được active cùng với trạng thái chờ (pending status).  
+
+Một ngắt có thể được chấp nhận bởi bộ xử lý nếu:
+* Pending status is set.
+* Interrupt is enabled.
+* Mức ưu tiên của ngắt cao hơn ngắt hiện tại.
+
+* III. Tổng kết
+Trên đây là những tóm lược của mình về ngoại lệ và ngắt trong lập trình nhúng, rất hi vọng những kiến thức này có thể giúp một phần nào đó cho các bạn.
+Mình sẽ còn có thêm nhiều bài viết khác về ngắt bởi bài viết này mới chỉ là sơ lược về ngắt, các bạn hãy tìm đọc để có thể có thêm kiến thức nhé :3 !!!
