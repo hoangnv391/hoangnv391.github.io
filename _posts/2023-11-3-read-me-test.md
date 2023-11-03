@@ -4,8 +4,11 @@ title: Ngoại lệ và ngắt trong lập trình nhúng
 categories: embedded
 ---
 
-*Ngoại lệ và ngắt là một phần rất quan trọng trong lập trình nhúng. Trong bài viết này, hãy cùng mình tìm hiểu sơ lược về chúng.*  
-*Tài liệu được viết dựa trên thao tác với ARM Cortex-M4.*  
+*Ngoại lệ và ngắt là một phần rất quan trọng trong lập trình nhúng. Trong bài viết này, hãy cùng mình tìm hiểu sơ lược về chúng.*    
+*(Tài liệu được viết dựa trên thao tác với ARM Cortex-M4)*    
+*Các từ viết tắt được sử dụng trong bài viết*    
+
+
 ![_config.yml]({{ site.baseurl }}/images/interrupt.png)
 # I.Tổng quan về ngoại lệ/ngắt
 ## 1. Ngoại lệ và ngắt (Exception and Interrupt)
