@@ -35,15 +35,17 @@ Ngắt là một sự kiện thường được tạo ra bỏi phần cứng, l�
 3. Bộ xử lý thực thi ISR để phục vụ ngoại vi hoặc phần cứng, việc xóa interrupt request trong ISR cần được thực hiện nếu cần thiết.
 4. Bộ xử lý tiếp tục thực hiện công việc trước khi ngắt xảy ra.
 
-## 2. Phân loại ngắt
+## 2. Phân loại ngắt và mức độ ưu tiên
 Xét theo exception number, có 2 kiểu ngắt:
 * 1 - 15 là ngoại lệ hệ thống (system exception)
 * Từ 16 trở lên là các ngắt (interrupt)
 
-Phần lớn độ ưu tiên của các ngắt (priority) là có thể cấu hình được. Tuy vậy, có một vài ngắt mà mức độ ưu tiên của chúng là cố định, bao gồm:
+Khi 2 ngắt cùng xảy ra, việc thực thi ISR của ngắt nào trước được quyết định bởi mức độ ưu tiên, ngắt nào có mức độ ưu tiên cao hơn (priority level nhỏ hơn) sẽ được ưu tiên thực thi trước. Phần lớn độ ưu tiên của các ngắt (priority) là có thể cấu hình được. Tuy vậy, có một vài ngắt mà mức độ ưu tiên của chúng là cố định, bao gồm:
 * Reset Handler - (-3)
 * Non-Masked Interrupt (NMI) - (-2)
 * HardFault - (-1)
+
+Priority level của các ngắt này là các số âm, thể hiện rằng chúng có mức độ ưu tiên cao hơn tất cả các ngắt còn lại.  
 
 *Hãy nhớ, exception number là duy nhất cho mỗi ngắt*
 
