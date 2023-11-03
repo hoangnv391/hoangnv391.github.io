@@ -8,10 +8,12 @@ categories: embedded
 *(Tài liệu được viết dựa trên thao tác với ARM Cortex-M4)*    
 *Các từ viết tắt được sử dụng trong bài viết*    
 
-| Syntax      | Description |
+| **Từ viết tắt**      | **Viết đầy đủ** |
 | :-----------: | :-----------: |
-| Header      | Title       |
-| Paragraph   | Text        |
+| ISR      | Interrupt Service Routine       |
+| NVIC   | Nested Vector Interrupt Controller        |
+
+
 
 ![_config.yml]({{ site.baseurl }}/images/interrupt.png)
 # I.Tổng quan
@@ -29,10 +31,5 @@ NVIC có thể xử lý 2 nguồn ngắt:
 * Level triggred interrupt request - nguồn ngắt sẽ giữ request high cho đến khi ngắt được phục vụ.
 
 # II. Ngắt và quá trình xử lý ngắt
-| Month    | Savings |
-| -------- | ------- |
-| January  | $250    |
-| February | $80     |
-| March    | $420    |
 
 
