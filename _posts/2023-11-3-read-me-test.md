@@ -14,7 +14,7 @@ categories: embedded
 | March    | $420    |
 
 ![_config.yml]({{ site.baseurl }}/images/interrupt.png)
-# I.Tổng quan về ngoại lệ/ngắt
+# I.Tổng quan
 ## 1. Ngoại lệ và ngắt (Exception and Interrupt)
 Trong bài viết, mình sẽ chỉ sử dụng từ "ngắt", "ngoại lệ" - với bản chất giống như ngắt, chỉ là có một chút khác biệt, mình sẽ giải thích sự khác biệt đó ở phía dưới.  
 
@@ -28,6 +28,11 @@ NVIC có thể xử lý 2 nguồn ngắt:
 * Pulsed interrupt request - yêu cầu ngắt chỉ xảy ra trong một clock cycle. Khi NVIC nhận được tín hiệu ngắt, trạng thái chờ tương ứng sẽ được đặt và giữ cho đến khi ngắt được phục vụ.
 * Level triggred interrupt request - nguồn ngắt sẽ giữ request high cho đến khi ngắt được phục vụ.
 
-## 
+# II. Ngắt và quá trình xử lý ngắt
+| Month    | Savings |
+| -------- | ------- |
+| January  | $250    |
+| February | $80     |
+| March    | $420    |
 
 
