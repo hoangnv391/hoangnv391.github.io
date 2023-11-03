@@ -3,9 +3,9 @@ layout: post
 title: Sơ lược về ngoại lệ và ngắt trong lập trình nhúng
 categories: embedded interrupt
 ---
+*(Tài liệu được viết dựa trên thao tác với ARM Cortex-M4)*   
 
-*Ngoại lệ và ngắt là một phần rất quan trọng trong lập trình nhúng. Trong bài viết này, hãy cùng mình tìm hiểu sơ lược về chúng.*    
-*(Tài liệu được viết dựa trên thao tác với ARM Cortex-M4)*    
+*Ngoại lệ và ngắt là một phần rất quan trọng trong lập trình nhúng. Trong bài viết này, hãy cùng mình tìm hiểu sơ lược về chúng.*     
 *Các từ viết tắt được sử dụng trong bài viết*    
 
 | **Từ viết tắt**      | **Viết đầy đủ** |
