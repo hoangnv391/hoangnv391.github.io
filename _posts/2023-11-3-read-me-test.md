@@ -84,5 +84,5 @@ Một ngắt có thể được chấp nhận bởi bộ xử lý nếu:
 * Mức ưu tiên của ngắt cao hơn ngắt hiện tại.
 
 # III. Tổng kết
-Trên đây là những tóm lược của mình về ngoại lệ và ngắt trong lập trình nhúng, rất hi vọng những kiến thức này có thể giúp một phần nào đó cho các bạn.
+Trên đây là những tóm lược của mình về ngoại lệ và ngắt trong lập trình nhúng, rất hi vọng những kiến thức này có thể giúp một phần nào đó cho các bạn.  
 Mình sẽ còn có thêm nhiều bài viết khác về ngắt bởi bài viết này mới chỉ là sơ lược về ngắt, các bạn hãy tìm đọc để có thể có thêm kiến thức nhé :3 !!!
