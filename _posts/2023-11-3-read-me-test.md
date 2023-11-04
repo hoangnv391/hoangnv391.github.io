@@ -31,7 +31,7 @@ NVIC có thể xử lý 2 nguồn ngắt:
 
 # II. Ngắt và quá trình xử lý ngắt
 ## 1. Tổng quan
-Ngắt là một sự kiện thường được tạo ra bỏi phần cứng, làm thay đổi luồng chạy thông thường của chương trình. Khi một ngoại vi hoặc phần cứng cần được phục vụ bởi bộ xử lý, quy trình thường sẽ xảy ra như sau:
+Ngắt là một sự kiện thường được tạo ra bởi phần cứng, làm thay đổi luồng chạy thông thường của chương trình. Khi một ngoại vi hoặc phần cứng cần được phục vụ bởi bộ xử lý, quy trình thường sẽ xảy ra như sau:
 1. Ngoại vi gửi một yêu cầu xử lý ngắt (interrupt request) tới bộ xử lý.
 2. Bộ xử lý hoãn thực thi tác vụ hiện tại.
 3. Bộ xử lý thực thi ISR để phục vụ ngoại vi hoặc phần cứng, việc xóa interrupt request trong ISR cần được thực hiện nếu cần thiết.
