@@ -13,7 +13,7 @@ Vector table là một mảng của các data word nằm ở trong system memory
 
 Vector table có thể được đặt tại một vùng nhớ khác và việc đặt lại này được thực hiện bởi một thanh ghi nằm trong SCB là Vector table Offset Register (VTOR). Sau khi MCU được reset, giá trị của VTOR được đặt lại thành 0, do đó, vector table được đặt tại địa chỉ 0x0 sau khi reset. Hãy thử nhìn qua cấu trúc của một vector table:  
 
-![_config.yml]({{ site.baseurl }}/images/interrupt.png)  
+![_config.yml]({{ site.baseurl }}/images/vector-table/vector-table-structure.png)  
 
 Ví dụ, nếu reset có exception type là 1, với việc mỗi data word có kích thước 4 byte, thì địa chỉ của reset vector là 1 x 4, tức là bằng 0x00000004, và NMI vector (type 2) được đặt tại địa chỉ 2 x 4 = 0x00000008. Data word tại địa chỉ 0x00000000 được sử dụng để lưu trữ giá trị khởi tạo của Main Stack Pointer (MSP).  
 
