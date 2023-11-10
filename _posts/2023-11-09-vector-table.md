@@ -28,13 +28,13 @@ Thêm vào đó, với việc thanh ghi VTOR - thanh ghi chứa địa chỉ c�
 ## 1. Thiết bị sử dụng boot loader
 Trong một vài vi điều khiển, có thể có nhiều bộ nhớ để lưu chương trình: boot ROM và user flash memory. Boot loader thường được lập trình trước và được lưu vào boot ROM bởi nhà sản xuất MCU. Khi MCU khởi động, nó sẽ thực thi boot loader ở trong boot ROM trước tiên, sau đó chuyển tới thực thi chương trình của người dùng trong user flash, VTOR được lập trình để trỏ tới địa chỉ bắt đầu của user flash memory, do đó, vector table trong user flash sẽ được sử dụng.  
 
-![_config.yml]({{ site.baseurl }}/images/interrupt.png)  
+![_config.yml]({{ site.baseurl }}/images/vector-table/program-using-boot-loader.png)  
 
 ## 2. Chương trình được tải vào trong RAM
 Trong một vài trường hợp, chương trình có thể được tải từ một vài nguồn bên ngoài vào trong RAM để thực thi. Nó có thể được lưu trữ trên SD card, hay thậm chí là có thể được truyền tải trên đường truyền mạng.  
 
 Trong trường hợp này, chương trình được lưu trong chip cần khởi tạo một vài phần cứng, sao chép chương trình được lưu ở bên ngoài lên RAM, cập nhật giá trị thanh ghi VTOR và sau đó, thực thi chương trình bên ngoài đã được lưu trên RAM.  
-![_config.yml]({{ site.baseurl }}/images/interrupt.png)  
+![_config.yml]({{ site.baseurl }}/images/vector-table/program-loaded-to-ram.png)  
 
 ## 3. Vector table không cố định
 Trong một vài trường hợp, lập trình viên muốn có nhiều impletation của cùng một ISR trong ROM và chuyển đổi giữa chúng vào các giai đoạn khác nhau của chương trình. Trong trường hợp này, họ có thể sao chép vector table từ program memory vào SRAM và lập trình VTOR để trỏ tới vector table trên SRAM. Từ khi nội dung trên SRAM có thể được thay đổi bất cứ khi nào, lập trình viên có thể sửa đổi interrupt vector một cách dễ dàng ở các giai đoạn khác nhau của chương trình.  
