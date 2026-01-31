@@ -13,6 +13,14 @@ document.addEventListener('DOMContentLoaded', function () {
     // Avoid adding duplicates
     if (container.querySelector('.copy-btn')) return;
 
+    // Find code element and check language class (only enable for bash/sh/shell/zsh)
+    var code = container.querySelector('code') || container.querySelector('pre') || container;
+    var combinedClass = (code.className || '') + ' ' + (container.className || '');
+    // match language-bash, lang-bash, bash, sh, shell, zsh (case-insensitive)
+    if (!combinedClass.match(/\b(?:language-|lang-)?(?:bash|sh|shell|zsh)\b/i)) return;
+    // explicitly ignore console blocks
+    if (combinedClass.match(/\bconsole\b/i)) return;
+
     // Ensure positioning context
     if (getComputedStyle(container).position === 'static') {
       container.style.position = 'relative';
@@ -23,8 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Copy code');
     btn.textContent = 'Copy';
-
-    var code = container.querySelector('code') || container.querySelector('pre') || container;
 
     btn.addEventListener('click', function (e) {
       e.preventDefault();
