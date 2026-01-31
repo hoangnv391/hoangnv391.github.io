@@ -13,13 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
     // Avoid adding duplicates
     if (container.querySelector('.copy-btn')) return;
 
-    // Find code element and check language class (only enable for bash/sh/shell/zsh)
+    // Find code element
     var code = container.querySelector('code') || container.querySelector('pre') || container;
     var combinedClass = (code.className || '') + ' ' + (container.className || '');
-    // match language-bash, lang-bash, bash, sh, shell, zsh (case-insensitive)
-    if (!combinedClass.match(/\b(?:language-|lang-)?(?:bash|sh|shell|zsh)\b/i)) return;
-    // explicitly ignore console blocks
-    if (combinedClass.match(/\bconsole\b/i)) return;
+
+    // If class explicitly marks bash-like language, allow
+    var isBashClass = /\b(?:language-|lang-)?(?:bash|sh|shell|zsh)\b/i.test(combinedClass);
+    var isConsoleClass = /\bconsole\b/i.test(combinedClass);
+
+    // If not explicitly marked, use content heuristic to detect shell commands
+    if (!isBashClass) {
+      var text = (code.textContent || '').trim();
+      var lines = text.split(/\r?\n/).map(function(l){ return l.replace(/\u00A0/g, ' ').trim(); }).filter(function(l){ return l.length > 0; });
+      if (lines.length === 0) return; // empty
+
+      // Lines that look like commands (start with prompt $ or #, or look like a command name)
+      var cmdLines = lines.filter(function(l){ return /^\s*(?:\$|#|[A-Za-z0-9._-]+@|>)/.test(l) || /^[A-Za-z0-9_\-]+(\s|$|\.)/.test(l); });
+      var outputLines = lines.length - cmdLines.length;
+
+      // require at least one command-like line, and not dominated by output (heuristic)
+      if (cmdLines.length === 0) return;
+      if (outputLines > cmdLines.length * 2) return;
+
+      // also skip if class explicitly says console
+      if (isConsoleClass) return;
+    }
 
     // Ensure positioning context
     if (getComputedStyle(container).position === 'static') {
