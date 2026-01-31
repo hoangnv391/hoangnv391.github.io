@@ -32,9 +32,23 @@
   border-radius: 3px;
   cursor: pointer;
   color: #333;
+  z-index: 999; /* ensure button is on top */
+  pointer-events: auto; /* ensure it's clickable */
 }
 .copy-btn:hover {
   background: #e6e6e6;
+}
+
+/* Make sure code / pre don't overlap the button visually */
+.highlight code, .highlight pre {
+  position: relative;
+  z-index: 1;
+}
+
+/* Accessibility: focus style */
+.copy-btn:focus {
+  outline: 2px solid #268BD2;
+  outline-offset: 2px;
 }
 
 code {
