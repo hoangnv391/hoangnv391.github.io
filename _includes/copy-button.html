@@ -1,9 +1,12 @@
 <script>
 // Add Copy buttons to code blocks
 document.addEventListener('DOMContentLoaded', function () {
-  // Select highlight blocks and pre > code
+  // Select highlight blocks and pre
   var blocks = document.querySelectorAll('div.highlight, pre');
   blocks.forEach(function (block) {
+    // Skip <pre> that live inside a .highlight (avoid double buttons)
+    if (block.tagName && block.tagName.toLowerCase() === 'pre' && block.closest('.highlight')) return;
+
     // Avoid adding multiple buttons
     if (block.querySelector('.copy-btn')) return;
 
@@ -14,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.setAttribute('aria-label', 'Copy code');
     btn.textContent = 'Copy';
 
-    // Determine the text to copy: prefer code element textContent
-    var code = block.querySelector('code') || block;
+    // Determine the text to copy: prefer inner code or pre
+    var code = block.querySelector('code') || block.querySelector('pre') || block;
 
     btn.addEventListener('click', function () {
       var text = code.textContent;
