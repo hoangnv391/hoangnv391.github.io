@@ -1,0 +1,56 @@
+<script>
+// Add Copy buttons to code blocks
+document.addEventListener('DOMContentLoaded', function () {
+  // Select highlight blocks and pre > code
+  var blocks = document.querySelectorAll('div.highlight, pre');
+  blocks.forEach(function (block) {
+    // Avoid adding multiple buttons
+    if (block.querySelector('.copy-btn')) return;
+
+    // Create button
+    var btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.textContent = 'Copy';
+
+    // Determine the text to copy: prefer code element textContent
+    var code = block.querySelector('code') || block;
+
+    btn.addEventListener('click', function () {
+      var text = code.textContent;
+
+      // Use clipboard API if available
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+        }).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+
+      function fallbackCopy() {
+        // Fallback using textarea + execCommand
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+        } catch (e) {
+          btn.textContent = 'Failed';
+          setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+        }
+        document.body.removeChild(textarea);
+      }
+    });
+
+    // Place button inside block (positioned by CSS)
+    block.style.position = 'relative';
+    block.insertBefore(btn, block.firstChild);
+  });
+});
+</script>
