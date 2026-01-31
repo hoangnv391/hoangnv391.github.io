@@ -11,6 +11,10 @@ Trong cửa số Git Bash
 
 ```bash
 $ ssh-keygen -t rsa
+```
+
+```console
+$ ssh-keygen -t rsa
 
 Enter file in which to save the key (/root/.ssh/id_rsa): [Press enter]
 Bash
@@ -26,12 +30,20 @@ Hãy mở Git Bash, trong cửa sổ Git Bash, đảm bảo rằng ssh-agent đ�
 
 ```bash
 $ eval "$(ssh-agent -s)"
+```
+
+```console
+$ eval "$(ssh-agent -s)"
 Agent pid 1023 [May be diferent on your PC]
 ```
 
 Thêm SSH key của bạn vào ssh-agent:
 
 ```bash
+$ ssh-add.exe /c/Users/Admin/.ssh/id_rsa
+```
+
+```console
 $ ssh-add.exe /c/Users/Admin/.ssh/id_rsa
 Identity added: /c/Users/Admin/.ssh/id_rsa ([Your name])
 ```
