@@ -3,7 +3,7 @@ layout: post
 title: Tạo SSH key và thêm SSH key vào tài khoản GitHub
 categories: git
 ---
-*( Cách tạo SSH key và thêm SSH vào tài khoản GitHub. Đảm bảo bạn đã cài đặt Git và có thể mở cửa sổ Git Bash ở trên máy tính )*
+*(Cách tạo SSH key và thêm SSH vào tài khoản GitHub. Đảm bảo bạn đã cài đặt Git và có thể mở cửa sổ Git Bash ở trên máy tính)*
 
 # Bước 1: Tạo SSH Key
 

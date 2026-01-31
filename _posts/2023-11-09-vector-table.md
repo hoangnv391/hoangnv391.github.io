@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vector table và vai trò của nó trong xử lý ngắt (Interruptt)
+title: Vector table và vai trò của nó trong xử lý ngắt (Interrupt)
 categories: embedded interrupt
 ---
 *(Tài liệu được viết dựa trên thao tác với ARM Cortex-M4)*
