@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cách tạo SSH key và thêm vào GitHub
+title: Sơ lược về ngoại lệ và ngắt trong lập trình nhúng
 categories: embedded interrupt
 ---
 
