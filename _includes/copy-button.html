@@ -1,29 +1,25 @@
 <script>
-// Add Copy buttons to code blocks
+// Add Copy buttons to code blocks — attach floating buttons to document.body so they're not blocked by inner scroll
 document.addEventListener('DOMContentLoaded', function () {
-  // Select highlight blocks and pre
   var blocks = document.querySelectorAll('div.highlight, pre');
-  blocks.forEach(function (block) {
+  var buttons = [];
+
+  function createButton(block) {
     // Skip <pre> that live inside a .highlight (avoid double buttons)
     if (block.tagName && block.tagName.toLowerCase() === 'pre' && block.closest('.highlight')) return;
+    // Avoid duplicates
+    if (block.dataset && block.dataset.copyBtn) return;
 
-    // Avoid adding multiple buttons
-    if (block.querySelector('.copy-btn')) return;
-
-    // Create button
     var btn = document.createElement('button');
-    btn.className = 'copy-btn';
+    btn.className = 'copy-btn copy-btn-floating';
     btn.type = 'button';
     btn.setAttribute('aria-label', 'Copy code');
     btn.textContent = 'Copy';
 
-    // Determine the text to copy: prefer inner code or pre
     var code = block.querySelector('code') || block.querySelector('pre') || block;
 
     btn.addEventListener('click', function () {
       var text = code.textContent;
-
-      // Use clipboard API if available
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () {
           btn.textContent = 'Copied!';
@@ -34,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       function fallbackCopy() {
-        // Fallback using textarea + execCommand
         var textarea = document.createElement('textarea');
         textarea.value = text;
         document.body.appendChild(textarea);
@@ -51,9 +46,43 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Place button inside block (positioned by CSS)
-    block.style.position = 'relative';
-    block.insertBefore(btn, block.firstChild);
-  });
+    // add to body and track
+    document.body.appendChild(btn);
+    buttons.push({btn: btn, block: block});
+    if (block.dataset) block.dataset.copyBtn = '1';
+  }
+
+  blocks.forEach(createButton);
+
+  function positionButtons() {
+    buttons.forEach(function (item) {
+      var btn = item.btn, block = item.block;
+      var rect = block.getBoundingClientRect();
+
+      // hide button if block is fully out of viewport vertically
+      if (rect.bottom < 0 || rect.top > (window.innerHeight || document.documentElement.clientHeight)) {
+        btn.style.display = 'none';
+        return;
+      }
+
+      btn.style.display = '';
+      // compute page coordinates (account for scroll)
+      var left = rect.right + window.pageXOffset - btn.offsetWidth - 8;
+      var top = rect.top + window.pageYOffset + 8;
+      btn.style.position = 'absolute';
+      btn.style.left = left + 'px';
+      btn.style.top = top + 'px';
+      btn.style.zIndex = 9999;
+    });
+  }
+
+  // initial positioning
+  positionButtons();
+  // reposition on scroll/resize — use capture to catch scrolling in inner elements
+  window.addEventListener('scroll', positionButtons, true);
+  window.addEventListener('resize', positionButtons);
+
+  // Recompute positions after images/fonts load
+  window.addEventListener('load', positionButtons);
 });
 </script>
