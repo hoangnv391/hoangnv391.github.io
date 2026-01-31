@@ -7,8 +7,17 @@
   -webkit-box-shadow: 3px 3px rgba(0,0,0,0.1);
   box-shadow: 3px 3px rgba(0,0,0,0.1);
   margin: 20px 0 20px 0;
-  overflow: scroll;
-  position: relative; // needed for copy button positioning
+  overflow: auto; /* use single outer scrollbar */
+  position: relative; /* needed for copy button positioning */
+}
+
+/* Ensure inner pre doesn't create its own frame/scrollbar */
+.highlight pre {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  overflow: visible; /* let outer container handle scrolling */
 }
 
 /* Copy button */
